@@ -17,7 +17,7 @@ foreach($filterElements as $elSet=>$el) {
 	
 	
 	add_filter(array('Form', 'Item', $elSet, $el), 'ControlledVocabPlugin::filterItemForm');             
-	//add_filter(array('Save', 'Item',  $elSet, $el), 'ControlledVocabPlugin::filterItemSave');	
+	add_filter(array('Save', 'Item',  $elSet, $el), 'ControlledVocabPlugin::filterItemSave');	
 	
 }
 
@@ -25,6 +25,16 @@ foreach($filterElements as $elSet=>$el) {
 
 class ControlledVocabPlugin
 {
+	
+    public static $dcSubjects = array(''       => '',
+                                      'red'    => 'red',
+                                      'yellow' => 'yellow',
+                                      'green'  => 'green',
+                                      'blue'   => 'blue',
+                                      'brown'  => 'brown',
+                                      'black'  => 'black',
+                                      'white'  => 'white');
+                                      
 	public static function admin_navigation_main($tabs)
 	{
 		$tabs['Controlled Vocabs'] = uri('controlled-vocab');
@@ -100,10 +110,11 @@ class ControlledVocabPlugin
     public static function filterItemForm($html, $inputNameStem, $value,
                                           $options, $record, $element)
     {
+     	//TODO: grab the stored data about terms and build up the array for each Element
      	$taOptions = array('rows'=>'2', 'cols'=>'50');  
         $html .= __v()->formTextarea($inputNameStem . '[text][0]', $value, $taOptions);
-       // $html .= '<br />';
-       // $html .= __v()->formSelect($inputNameStem . '[text][1]', $value, $options, ControlledVocabPlugin::$dcSubjects);
+        $html .= '<br />';
+        $html .= __v()->formSelect($inputNameStem . '[text][1]', $value, $options, ControlledVocabPlugin::$dcSubjects);
        
         $html .= "<p>Use Controlled Vocabulary Options</p>";
         return $html;
