@@ -8,7 +8,7 @@ class ControlledVocab_Term extends Omeka_Record {
     public $description;
     public $uri; 
     public $vocab_id; 
-    public $element_id; 
+    public $element_ids; 
 
 
 	public function findElementSetAndElement()
@@ -24,6 +24,18 @@ class ControlledVocab_Term extends Omeka_Record {
 		release_object($elSet);
 		return $retObject;
 		
+	}
+
+	public function appliesToElementId($element_id)
+	{
+		$termElements = unserialize($this->element_ids);
+		return in_array($element_id, $termElements);
+	}
+	
+	public function vocabAppliesToCollection($collection_id)
+	{
+		$vocab = $this->getDb()->getTable('ControlledVocab_Vocab')->find($this->vocab_id);
+		return $vocab->appliesToCollection($collection_id);
 	}
 
 }

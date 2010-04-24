@@ -5,30 +5,75 @@
 class ControlledVocab_TermTable extends Omeka_Db_Table
 {
 
-	public function findByElementId($elId)
+	public function filterByVocab($select, $vocab) 
 	{
-		$sel = $this->getSelect();
-		$sel->where("element_id = ?", $elId);
-		return $this->fetchObjects($sel);
-		
-		
-	}
-
-	public function findByElement($element)
-	{
-		return $this->findByElementId($element->id);
-	}
-
-	public function findByElementSetNameAndElementName($elementSetName, $elementName)
-	{
-		
-		$el = get_db()->getTable('Element')->findByElementSetNameAndElementName($elementSetName, $elementName); 
-		return $this->findByElement($el);	
+        $select->joinInner(array('v' => $this->getDb()->ControlledVocab_Vocab), 
+                           'collection_id = v.id', 
+                           array());
+        
+        if ($vocab instanceof ControlledVocab_Vocab) {
+            $select->where('v.id = ?', $vocab->id);
+        } else if (is_numeric($vocab)) {
+            $select->where('v.id = ?', $vocab);
+        } else {
+            $select->where('v.name = ?', $vocab);
+        }		
 	}
 	
-	public function getFilterElements()
+
+	public function findByVocabAndElement($vocab, $element)
 	{
+		$results = $this->findBy(array('vocab'=>$vocab));
+		return $this->_filterResultsByElement($element);
+	}
+	
+	/**
+	 * findByVocabAndCollectionAndElement
+	 * returns an array of the form:
+	 * array('Vocab'=>array('term_id'=>'term_name', . . . ), 'Vocab2'=>array(. . . ))
+	 * That is, an array of the vocabulary names that map onto pairsForSelectForm
+	 * @return array
+	 */
+	
+	
+	public function findByVocabAndCollectionAndElement($vocab, $collection, $element)
+	{
+		//first, dig up the vocabs
+		$vocabTable = $this->getDb()->getTable('ControlledVocab_Vocab');
+		$vocabs = $vocabTable->findByCollection($collection);
+		$returnArray = array();
+		foreach($vocabs as $vocab) {
+			$vocabName = $vocab->name;
+			$returnArray[$vocabName] = array();
+			$terms = $this->findByVocabAndElement($vocab, $element);
+			foreach($terms as $term) {
+				$returnArray[$vocabName][$term->id] = $term->name;
+				release_object($term);
+			}
+			release_object($vocab);
+		}
+		return $returnArray();
+	}
+
+	private function _filterResultsByElement($results, $element)
+	{
+		$element_id = is_numeric($element) ? $element : $element->id;
 		
+		foreach($results as $index=>$result) {
+			if (! $result->appliesToElement($element_id)) {
+				unset($results[$index]);
+				release_object($result);
+			}
+		}
+		return $results;
+	}
+	
+
+	public function applySearchFilters($select, $params)
+	{		
+        if(isset($params['vocab'])) {
+            $this->filterByVocab($select, $params['vocab']);
+        }      						
 	}
 		
     protected function _getColumnPairs()

@@ -50,8 +50,8 @@ class ControlledVocabPlugin
 	  `name` text COLLATE utf8_unicode_ci NOT NULL,
 	  `description` text COLLATE utf8_unicode_ci NULL,
 	  `uri` text COLLATE utf8_unicode_ci NULL,
-	  `vocab_id` int(10) unsigned NOT NULL,
-	  `element_id` int(10) unsigned NOT NULL,
+	  `vocab_id` int(10) unsigned NOT NULL,	  		
+	  `element_ids`  text COLLATE utf8_unicode_ci NOT NULL,
 	  PRIMARY KEY (`id`)
 	) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;";
 
@@ -61,6 +61,7 @@ class ControlledVocabPlugin
 	  `id` int(11) NOT NULL auto_increment,
 	  `name` text COLLATE utf8_unicode_ci NOT NULL,
 	  `description` text COLLATE utf8_unicode_ci NULL,
+	  `collection_ids`  text COLLATE utf8_unicode_ci NOT NULL,	  		
 	  `uri` text COLLATE utf8_unicode_ci NULL,
 	  `api_url` text COLLATE utf8_unicode_ci NULL,
 	  PRIMARY KEY (`id`)
