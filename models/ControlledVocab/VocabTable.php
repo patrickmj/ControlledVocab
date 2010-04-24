@@ -14,7 +14,7 @@ class ControlledVocab_VocabTable extends Omeka_Db_Table
 	public function findByCollection($collection)
 	{
 		$vocabs = $this->findAll();
-		return $this->_filterResultsByCollection($collection);
+		return $this->_filterResultsByCollection($vocabs, $collection);
 	}
 	
 	private function _filterResultsByCollection($results, $collection)

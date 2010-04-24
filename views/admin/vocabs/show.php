@@ -13,7 +13,7 @@ head($head);
 		<tr>
 			<th>Name</th>
 			<th>Description</th>
-			<th>Vocabulary</th>
+			<th>Collections</th>
 			<th>URI</th>
 			<th>API URL</th>
 			<th>Edit?</th>
@@ -23,7 +23,10 @@ head($head);
 <tr>
 	<td><?php echo $controlledvocab_vocab->name; ?></td>
 	<td><?php echo $controlledvocab_vocab->description; ?></td>
-	<td><?php echo $controlledvocab_vocab->getVocabName(); ?></td>
+	<td><?php foreach (unserialize($controlledvocab_vocab->collection_ids) as $collection_id): ?>
+		<p><?php echo $collection_id ?></p>
+	 
+	<?php endforeach; ?></td>
 	<td><?php echo $controlledvocab_vocab->uri; ?></td>
 	<td><?php echo $controlledvocab_vocab->api_url; ?></td>
 

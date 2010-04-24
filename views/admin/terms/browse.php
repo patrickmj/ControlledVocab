@@ -26,7 +26,7 @@ head($head);
 	<td><?php echo $term->description; ?></td>
 	<td><?php echo $term->getVocabName(); ?></td>
 	<td><?php echo $term->uri; ?></td>
-	<td><?php foreach($term->element_id as $elId) {
+	<td><?php foreach(unserialize($term->element_ids) as $elId) {
 			echo $elId;
 	}
 	?>

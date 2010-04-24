@@ -33,7 +33,7 @@ head($head);
 <p class="explanation">The Controlled Vocabulary this term belongs to.</p>
 </div>
 <div class="input">
-<?php echo select_element(array('name'=>'element_id'),  $controlledvocab_term->element_id, 'Elements'); ?>
+<?php echo select_element(array('name'=>'element_ids', 'multiple'=>'true'),  unserialize($controlledvocab_term->element_ids), 'Elements'); ?>
 
 </div>
 <?php echo submit(array('class'=>'submit')); ?>

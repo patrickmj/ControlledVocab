@@ -15,6 +15,10 @@ class ControlledVocab_TermsController extends Omeka_Controller_Action
 		$vocabs = get_db()->getTable('ControlledVocab_Vocab')->findPairsForSelectForm();
 		
 		$this->view->assign(array('vocabs'=>$vocabs, 'debug'=>''));
+		if($_POST && isset($_POST['element_ids'])) {
+			$_POST['element_ids'] = serialize($_POST['element_ids']);
+		}
+		
 		return parent::addAction();
 		
 	}
@@ -22,8 +26,11 @@ class ControlledVocab_TermsController extends Omeka_Controller_Action
 	public function editAction()
 	{
 		$vocabs = get_db()->getTable('ControlledVocab_Vocab')->findPairsForSelectForm();
-        $varName = strtolower($this->_modelClass);
-        
+		$this->view->assign(array('vocabs'=>$vocabs));
+ 
+ 		return parent::editAction();
+ 
+ /*       
         $record = $this->findById();
         
         try {
@@ -38,7 +45,7 @@ class ControlledVocab_TermsController extends Omeka_Controller_Action
         
         		
 		$this->view->assign(array('vocabs'=>$vocabs, $varName=>$record , 'debug'=>$debug));
-				
+				*/
 	}
 }
 

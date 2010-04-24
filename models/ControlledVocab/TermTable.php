@@ -8,7 +8,7 @@ class ControlledVocab_TermTable extends Omeka_Db_Table
 	public function filterByVocab($select, $vocab) 
 	{
         $select->joinInner(array('v' => $this->getDb()->ControlledVocab_Vocab), 
-                           'collection_id = v.id', 
+                           'vocab_id = v.id', 
                            array());
         
         if ($vocab instanceof ControlledVocab_Vocab) {
@@ -24,11 +24,12 @@ class ControlledVocab_TermTable extends Omeka_Db_Table
 	public function findByVocabAndElement($vocab, $element)
 	{
 		$results = $this->findBy(array('vocab'=>$vocab));
-		return $this->_filterResultsByElement($element);
+		
+		return $this->_filterResultsByElement($results, $element);
 	}
 	
 	/**
-	 * findByVocabAndCollectionAndElement
+	 * findByVocabAndCollectionAndElementForSelect
 	 * returns an array of the form:
 	 * array('Vocab'=>array('term_id'=>'term_name', . . . ), 'Vocab2'=>array(. . . ))
 	 * That is, an array of the vocabulary names that map onto pairsForSelectForm
@@ -36,7 +37,7 @@ class ControlledVocab_TermTable extends Omeka_Db_Table
 	 */
 	
 	
-	public function findByVocabAndCollectionAndElement($vocab, $collection, $element)
+	public function findByVocabAndCollectionAndElementForSelect($vocab, $collection, $element)
 	{
 		//first, dig up the vocabs
 		$vocabTable = $this->getDb()->getTable('ControlledVocab_Vocab');
@@ -52,7 +53,7 @@ class ControlledVocab_TermTable extends Omeka_Db_Table
 			}
 			release_object($vocab);
 		}
-		return $returnArray();
+		return $returnArray;
 	}
 
 	private function _filterResultsByElement($results, $element)
@@ -60,7 +61,7 @@ class ControlledVocab_TermTable extends Omeka_Db_Table
 		$element_id = is_numeric($element) ? $element : $element->id;
 		
 		foreach($results as $index=>$result) {
-			if (! $result->appliesToElement($element_id)) {
+			if (false === $result->appliesToElementId($element_id)) {
 				unset($results[$index]);
 				release_object($result);
 			}

@@ -10,8 +10,9 @@ class ControlledVocab_Vocab extends Omeka_Record {
     public $api_url;
 
 
-	public function appliesToCollectionId($collection_id)
+	public function appliesToCollection($collection)
 	{
+		$collection_id = is_numeric($collection) ? $collection : $collection->id;
 		$vocabCollections = unserialize($this->collection_ids);
 		return in_array($collection_id, $vocabCollections);
 	}

@@ -25,7 +25,7 @@ head($head);
 	<td><?php echo $controlledvocab_term->description; ?></td>
 	<td><?php echo $controlledvocab_term->getVocabName(); ?></td>
 	<td><?php echo $controlledvocab_term->uri; ?></td>
-	<td><?php foreach($controlledvocab_term->element_id as $elId) {
+	<td><?php foreach(unserialize($controlledvocab_term->element_ids) as $elId) {
 			echo $elId;
 	}
 	?>

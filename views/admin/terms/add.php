@@ -17,25 +17,25 @@ head($head);
 <form method="post" enctype="multipart/form-data" id="item-form">
 
 <div class="input">
-<?php echo text(array('name'=>'name', 'value'=>$controlledvocab_term->name), $controlledvocab_term->name, 'Name'); ?>
+<?php echo text(array('name'=>'name', 'value'=>$controlledvocab_term->name), '', 'Name'); ?>
 </div>
 <div class="input">
 
 
-<?php echo textarea(array('name'=>'description', 'value'=>$controlledvocab_term->description, 'cols'=>'30', 'rows'=>'10'),  $controlledvocab_term->description, 'Description'); ?>
+<?php echo textarea(array('name'=>'description', 'value'=>$controlledvocab_term->description, 'cols'=>'30', 'rows'=>'10'), '', 'Description'); ?>
 </div>
 <div class="input">
 
 
-<?php echo text(array('name'=>'uri',  'value'=>$controlledvocab_term->uri), $controlledvocab_term->uri, 'Uri'); ?>
+<?php echo text(array('name'=>'uri',  'value'=>$controlledvocab_term->uri), '', 'Uri'); ?>
 </div>
 <div class="input">
-<?php echo select(array('name'=>'vocab_id'), $vocabs,  $controlledvocab_term->vocab_id, 'Vocabulary'); ?>
+<?php echo select(array('name'=>'vocab_id'), $vocabs,  '', 'Vocabulary'); ?>
 
 <p class="explanation">The Controlled Vocabulary this term belongs to.</p>
 </div>
 <div class="input">
-<?php echo select_element(array('name'=>'element_id'),  $controlledvocab_term->element_id, 'Elements'); ?>
+<?php echo select_element(array('name'=>'element_ids', 'multiple'=>'true'),  '', 'Elements'); ?>
 
 </div>
 <?php echo submit(array('class'=>'submit')); ?>

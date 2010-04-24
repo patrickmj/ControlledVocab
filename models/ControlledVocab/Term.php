@@ -26,8 +26,9 @@ class ControlledVocab_Term extends Omeka_Record {
 		
 	}
 
-	public function appliesToElementId($element_id)
+	public function appliesToElement($element)
 	{
+		$element_id = is_numeric($element) ? $element : $element->id;
 		$termElements = unserialize($this->element_ids);
 		return in_array($element_id, $termElements);
 	}

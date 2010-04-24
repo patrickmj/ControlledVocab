@@ -7,7 +7,7 @@ add_plugin_hook('uninstall', 'ControlledVocabPlugin::uninstall');
 add_plugin_hook('define_routes', 'ControlledVocabPlugin::define_routes');
 add_filter('admin_navigation_main', 'ControlledVocabPlugin::admin_navigation_main');
 
-
+/*
 $db = get_db();
 $terms =  $db->getTable('ControlledVocab_Term')->findAll();
 
@@ -21,7 +21,7 @@ foreach($filterElements as $elSet=>$el) {
 	
 }
 
-
+*/
 
 class ControlledVocabPlugin
 {
@@ -43,9 +43,23 @@ class ControlledVocabPlugin
 
 	public static function install()
 	{
-		$db = get_db();
+		$db = get_db();				
+
+		$sql = "CREATE TABLE IF NOT EXISTS `{$db->prefix}controlled_vocab_vocabs` (
+		  `id` int(11) NOT NULL auto_increment,
+		  `name` text COLLATE utf8_unicode_ci NOT NULL,
+		  `description` text COLLATE utf8_unicode_ci NULL,
+		  `collection_ids`  text COLLATE utf8_unicode_ci NOT NULL,	  		
+		  `uri` text COLLATE utf8_unicode_ci NULL,
+		  `api_url` text COLLATE utf8_unicode_ci NULL,
+		  PRIMARY KEY (`id`)
+		) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;";
+
+
+	$db->exec($sql);		
 		
-		$sql = "CREATE TABLE IF NOT EXISTS `{$db->prefix}controlled_vocab_terms` (
+		
+	$sql = "CREATE TABLE IF NOT EXISTS `{$db->prefix}controlled_vocab_terms` (
 	  `id` int(10) unsigned NOT NULL  auto_increment,
 	  `name` text COLLATE utf8_unicode_ci NOT NULL,
 	  `description` text COLLATE utf8_unicode_ci NULL,
@@ -57,18 +71,6 @@ class ControlledVocabPlugin
 
 	$db->exec($sql);
 
-	$sql = "CREATE TABLE IF NOT EXISTS `{$db->prefix}controlled_vocab_vocabs` (
-	  `id` int(11) NOT NULL auto_increment,
-	  `name` text COLLATE utf8_unicode_ci NOT NULL,
-	  `description` text COLLATE utf8_unicode_ci NULL,
-	  `collection_ids`  text COLLATE utf8_unicode_ci NOT NULL,	  		
-	  `uri` text COLLATE utf8_unicode_ci NULL,
-	  `api_url` text COLLATE utf8_unicode_ci NULL,
-	  PRIMARY KEY (`id`)
-	) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;";
-
-
-	$db->exec($sql);
 		
 	}
 
@@ -104,7 +106,7 @@ class ControlledVocabPlugin
 		$sql = "DROP TABLE IF EXISTS `{$db->prefix}controlled_vocab_terms`";
 		$db->exec($sql);
 				
-		$sql = "DROP TABLE IF EXISTS `{$db->prefix}controlled_vocab_terms_vocabs`";
+		$sql = "DROP TABLE IF EXISTS `{$db->prefix}controlled_vocab_vocabs`";
 		$db->exec($sql);		
 	}
 
