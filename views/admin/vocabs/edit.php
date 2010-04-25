@@ -37,7 +37,7 @@ head($head);
 </div>
 
 <div class="input">
-<?php echo select_collection(array('name'=>'element_ids', 'multiple'=>'true'),  unserialize($controlledvocab_vocab->collection_ids), 'Collections'); ?>
+<?php echo select_collection(array('name'=>'collection_ids', 'multiple'=>'true'),  unserialize($controlledvocab_vocab->collection_ids), 'Collections'); ?>
 </div>
 
 <?php echo submit(array('class'=>'submit')); ?>

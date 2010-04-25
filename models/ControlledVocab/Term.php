@@ -11,19 +11,24 @@ class ControlledVocab_Term extends Omeka_Record {
     public $element_ids; 
 
 
-	public function findElementSetAndElement()
+	public function getElementSetAndElement()
 	{
 		$db = get_db();
-		$el = $db->getTable('Element')->findById($this->element_id);
-		$elSet = $db->getTable('ElementSet')->findById($el->element_set_id);
-		$retArray = array($elSet->name=>$el->name);
+		$elTable = $db->getTable('Element');
 		$retObject = new StdClass();
-		$retObject->elSet = $elSet->name;
-		$retObject->el = $el->name;
-		release_object($el);
-		release_object($elSet);
-		return $retObject;
 		
+		$el_ids = unserialize($this->element_ids);
+		$retArray = array();	
+		foreach($el_ids as $el_id) {
+			$el = $elTable->find($el_id);
+			$elSet = $el->getElementSet();
+			$retArray[$elSet->name][] =$el->name;
+			release_object($el);
+			release_object($elSet);
+		}
+		
+
+		return $retArray;		
 	}
 
 	public function appliesToElement($element)

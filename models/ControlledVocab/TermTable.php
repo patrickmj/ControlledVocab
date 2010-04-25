@@ -37,7 +37,7 @@ class ControlledVocab_TermTable extends Omeka_Db_Table
 	 */
 	
 	
-	public function findByVocabAndCollectionAndElementForSelect($vocab, $collection, $element)
+	public function findByCollectionAndElementForSelect($collection, $element)
 	{
 		//first, dig up the vocabs
 		$vocabTable = $this->getDb()->getTable('ControlledVocab_Vocab');
@@ -69,6 +69,29 @@ class ControlledVocab_TermTable extends Omeka_Db_Table
 		return $results;
 	}
 	
+	public function getElementSetsAndElements() {
+		$terms = $this->findAll();
+		$returnArray = array();
+		foreach($terms as $term) {
+			$termData = $term->getElementSetAndElement();
+			$elSets = array_keys($termData);
+			foreach($elSets as $elSet) {
+				if(isset($returnArray[$elSet])) {
+					$returnArray[$elSet] = array_merge($returnArray[$elSet], $termData[$elSet]);	
+				} else {
+					$returnArray[$elSet] = array();
+					$returnArray[$elSet] = array_merge($returnArray[$elSet], $termData[$elSet]);
+				}
+				
+			}
+
+			release_object($term);
+		}
+		foreach ($returnArray as $elSet=>$array) {
+			$returnArray[$elSet] = array_unique($array);
+		}
+		return $returnArray;
+	}
 
 	public function applySearchFilters($select, $params)
 	{		

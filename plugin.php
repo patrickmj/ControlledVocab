@@ -7,21 +7,21 @@ add_plugin_hook('uninstall', 'ControlledVocabPlugin::uninstall');
 add_plugin_hook('define_routes', 'ControlledVocabPlugin::define_routes');
 add_filter('admin_navigation_main', 'ControlledVocabPlugin::admin_navigation_main');
 
-/*
-$db = get_db();
-$terms =  $db->getTable('ControlledVocab_Term')->findAll();
-
-
-$filterElements = array('Dublin Core'=>'Subject');
-foreach($filterElements as $elSet=>$el) {
+if(class_exists("ControlledVocab_Term")) {
+	$termTable = get_db()->getTable('ControlledVocab_Term');
+	$filterElements = $termTable->getElementSetsAndElements();
+	foreach($filterElements as $elSet=>$elNames) {
+		foreach($elNames as $elName) {
+			add_filter(array('Form', 'Item', $elSet, $elName), 'ControlledVocabPlugin::filterItemForm');
+			//add_filter(array('Form', 'Save', $elSet, $elName), 'ControlledVocabPlugin::filterItemSave');    
+		}
+	}
 	
 	
-	add_filter(array('Form', 'Item', $elSet, $el), 'ControlledVocabPlugin::filterItemForm');             
-	add_filter(array('Save', 'Item',  $elSet, $el), 'ControlledVocabPlugin::filterItemSave');	
 	
 }
+	
 
-*/
 
 class ControlledVocabPlugin
 {
@@ -114,21 +114,36 @@ class ControlledVocabPlugin
                                           $options, $record, $element)
     {
      	//TODO: grab the stored data about terms and build up the array for each Element
+     	$controlledVocabs = get_db()->getTable('ControlledVocab_Term')->findByCollectionAndElementForSelect($record->collection_id, $element->id);
+     	     	
      	$taOptions = array('rows'=>'2', 'cols'=>'50');  
         $html .= __v()->formTextarea($inputNameStem . '[text][0]', $value, $taOptions);
-        $html .= '<br />';
-        $html .= __v()->formSelect($inputNameStem . '[text][1]', $value, $options, ControlledVocabPlugin::$dcSubjects);
+        
+        $html .= "<br/>";
+        $html .= "<div class='controlled-vocabs'>";
+        $html .= radio(array('class'=>'controlled-vocab-vocabs', 'name'=>'controlled-vocab-radio-' . $element->name), array_keys($controlledVocabs), null, null);
+        $vocabCount = 0;
+        foreach($controlledVocabs as $vocab=>$termPairs) {        	
+        	$html .= select(array('name'=>'controlled-vocab-select-' . $element->name . '-' . $vocabCount , 'class'=>'controlled-vocab-terms'), $termPairs, null);
+        	$vocabCount++;
+        }
+        $html .= "</div";
+        
+        
+        //$html .= __v()->formSelect($inputNameStem . '[text][1]', $value, $options, ControlledVocabPlugin::$dcSubjects);
        
         $html .= "<p>Use Controlled Vocabulary Options</p>";
         return $html;
     }
-
+/*
     public static function filterItemSave($elementText, $record, $element)
     {
+    	
         if (strlen(trim($elementText[0]))) {
             return $elementText[0];
         }
         return $elementText[1];
     }
+    */
 }
 ?>
