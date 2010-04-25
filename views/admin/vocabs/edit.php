@@ -18,26 +18,31 @@ head($head);
 
 <div class="input">
 <?php echo text(array('name'=>'name', 'value'=>$controlledvocab_vocab->name), $controlledvocab_vocab->name, 'Name'); ?>
+<p class='controlled-vocab-explanation'>The name of the vocabulary.</p>
 </div>
 <div class="input">
 
 
 <?php echo textarea(array('name'=>'description', 'value'=>$controlledvocab_vocab->description, 'cols'=>'30', 'rows'=>'10'),  $controlledvocab_vocab->description, 'Description'); ?>
+<p class='controlled-vocab-explanation'>A description of the vocabulary.</p>
 </div>
 <div class="input">
 
 
 <?php echo text(array('name'=>'uri',  'value'=>$controlledvocab_vocab->uri), $controlledvocab_vocab->uri, 'Uri'); ?>
+<p class='controlled-vocab-explanation'>A URI that identifies the vocabular.</p>
 </div>
 
 <div class="input">
 
 
 <?php echo text(array('name'=>'api_url',  'value'=>$controlledvocab_vocab->api_url), $controlledvocab_vocab->api_url, 'API URL'); ?>
+<p class='controlled-vocab-explanation'>A URL of a service that provides a web service onto the vocabulary.</p>
 </div>
 
 <div class="input">
 <?php echo select_collection(array('name'=>'collection_ids', 'multiple'=>'true'),  unserialize($controlledvocab_vocab->collection_ids), 'Collections'); ?>
+<p class='controlled-vocab-explanation'>The collections to which the vocabulary applies.</p>
 </div>
 
 <?php echo submit(array('class'=>'submit')); ?>

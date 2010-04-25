@@ -53,7 +53,7 @@ class ControlledVocabPlugin
 	  `name` text COLLATE utf8_unicode_ci NOT NULL,
 	  `description` text COLLATE utf8_unicode_ci NULL,
 	  `uri` text COLLATE utf8_unicode_ci NULL,
-	  `vocab_id` int(10) unsigned NOT NULL,	  		
+	  `vocab_id` int(10) unsigned NULL,	  		
 	  `element_ids`  text COLLATE utf8_unicode_ci NOT NULL,
 	  PRIMARY KEY (`id`)
 	) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;";
@@ -125,18 +125,21 @@ class ControlledVocabPlugin
      	$taOptions = array('rows'=>'2', 'cols'=>'50');  
         $html .= __v()->formTextarea($inputNameStem . '[text]', $value, $taOptions);
         
-        $html .= "<br/>";
-        $html .= "<div class='controlled-vocab-vocabs'>";
-        $html .= "<h3 class='controlled-vocab-heading'>Controlled Vocabularies</h3>";
-        $html .= radio(array('class'=>'controlled-vocab-vocabs', 'onchange'=>'ControlledVocab.showTerms(event)', 'name'=>'controlled-vocab-radio-' . $inputNameStem), array_keys($controlledVocabs), null, null);
-        $vocabCount = 0;
-        foreach($controlledVocabs as $vocab=>$termPairs) {        	
-        
-        //have to do inline style to make jQuery play nicely with hiding and showing.
-       	$html .= select(array('name'=>'controlled-vocab-select-' . $inputNameStem . '-' . $vocabCount , 'class'=>'controlled-vocab-terms', 'style'=>'display:none;', 'onchange'=>'ControlledVocab.updateField(event)'), $termPairs, null);
-        	$vocabCount++;
+        if(count($controlledVocabs) != 0 ) {	        	
+	        $html .= "<br/>";
+	        $html .= "<div class='controlled-vocab-vocabs'>";        
+	        $html .= "<h3 class='controlled-vocab-heading'>Controlled Vocabularies</h3>";
+	        $html .= radio(array('class'=>'controlled-vocab-vocabs', 'onchange'=>'ControlledVocab.showTerms(event)', 'name'=>'controlled-vocab-radio-' . $inputNameStem), array_keys($controlledVocabs), null, null);
+	        $vocabCount = 0;
+	        foreach($controlledVocabs as $vocab=>$termPairs) {        	
+	        
+	        //have to do inline style to make jQuery play nicely with hiding and showing.
+	       	$html .= select(array('name'=>'controlled-vocab-select-' . $inputNameStem . '-' . $vocabCount , 'class'=>'controlled-vocab-terms', 'style'=>'display:none;', 'onchange'=>'ControlledVocab.updateField(event)'), $termPairs, null);
+	        	$vocabCount++;
+	        }
+	        $html .= "</div";        	        	
         }
-        $html .= "</div";
+
         return $html;
     }
 

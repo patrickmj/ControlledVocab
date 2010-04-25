@@ -16,25 +16,29 @@ head($head);
 
 <div class="input">
 <?php echo text(array('name'=>'name', 'value'=>$controlledvocab_term->name), $controlledvocab_term->name, 'Name'); ?>
+<p class='controlled-vocab-explanation'>The term.</p>
 </div>
 <div class="input">
 
 
 <?php echo textarea(array('name'=>'description', 'value'=>$controlledvocab_term->description, 'cols'=>'30', 'rows'=>'10'),  $controlledvocab_term->description, 'Description'); ?>
+<p class='controlled-vocab-explanation'>A description of the term.</p>
 </div>
 <div class="input">
 
 
 <?php echo text(array('name'=>'uri',  'value'=>$controlledvocab_term->uri), $controlledvocab_term->uri, 'Uri'); ?>
+<p class='controlled-vocab-explanation'>A URI that identifies the term.</p>
 </div>
+
 <div class="input">
 <?php echo select(array('name'=>'vocab_id'), $vocabs,  $controlledvocab_term->vocab_id, 'Vocabulary'); ?>
 
-<p class="explanation">The Controlled Vocabulary this term belongs to.</p>
+<p class='controlled-vocab-explanation'>The controlled vocabulary the term belongs to.</p>
 </div>
 <div class="input">
 <?php echo select_element(array('name'=>'element_ids', 'multiple'=>'true'),  unserialize($controlledvocab_term->element_ids), 'Elements'); ?>
-
+<p class='controlled-vocab-explanation'>The element sets and elements to which the term applies.</p>
 </div>
 <?php echo submit(array('class'=>'submit')); ?>
 </form>

@@ -1,5 +1,33 @@
 .controlled-vocab-elements {
-	padding-left: 9px;
+	padding-left: 9px;	
+}
+
+.controlled-vocab-explanation {
+	color: #999;
+	font-size: 11px;
+	margin-left: 200px;
 	
 }
 
+div.controlled-vocab-vocab-index {
+	width: 45%;
+	float:left;
+}
+
+div.controlled-vocab-term-index {
+	width: 45%;
+	float: right;
+	
+}
+
+div.controlled-vocab-indexes h1 {
+	width: 100%
+}
+div.controlled-vocab-indexes div.record {	
+	width: 300px;
+	margin: 12px;		
+}
+
+div.controlled-vocab-indexes a.edit {
+	float:right;
+}
