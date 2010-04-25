@@ -23,11 +23,17 @@ head($head);
 <tr>
 	<td><?php echo $controlledvocab_term->name; ?></td>
 	<td><?php echo $controlledvocab_term->description; ?></td>
-	<td><?php echo $controlledvocab_term->getVocabName(); ?></td>
+	<td><a href='<?php echo uri("controlled-vocab/vocabs/show/$controlledvocab_term->vocab_id");?>'><?php echo $controlledvocab_term->getVocabName(); ?></a></td>
 	<td><?php echo $controlledvocab_term->uri; ?></td>
-	<td><?php foreach(unserialize($controlledvocab_term->element_ids) as $elId) {
-			echo $elId;
-	}
+	<td><?php $elements = $controlledvocab_term->getElementSetAndElement(); 
+		foreach($elements as $elSet=>$elements) {
+			echo "<h2 class='controlled-vocab-element-set'>$elSet</h2>";
+			echo "<ul class='controlled-vocab-elements'>";
+			foreach($elements as $element) {
+				echo "<li class='controlled-vocab-element'>$element</li>";
+			}
+			echo "</ul>";
+		}
 	?>
 	</td>
 	<td>

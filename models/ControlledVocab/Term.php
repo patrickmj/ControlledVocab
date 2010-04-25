@@ -31,6 +31,12 @@ class ControlledVocab_Term extends Omeka_Record {
 		return $retArray;		
 	}
 
+	public function getVocabName()
+	{
+		$vocab = $this->getDb()->getTable('ControlledVocab_Vocab')->find($this->vocab_id);
+		return $vocab->name;
+		
+	}
 	public function appliesToElement($element)
 	{
 		$element_id = is_numeric($element) ? $element : $element->id;

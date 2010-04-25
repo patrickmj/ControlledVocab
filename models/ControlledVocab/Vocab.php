@@ -17,7 +17,18 @@ class ControlledVocab_Vocab extends Omeka_Record {
 		return in_array($collection_id, $vocabCollections);
 	}
 
-
+	public function getCollectionNames()
+	{
+		$collectionTable = $this->getDb()->getTable('Collection');
+		$returnArray = array();
+		foreach(unserialize($this->collection_ids) as $collection_id)
+		{
+			$collection = $collectionTable->find($collection_id);
+			$returnArray[] = $collection->name;
+			release_object($collection);
+		}
+		return $returnArray;
+	}
 }
 
 ?>

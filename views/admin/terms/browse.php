@@ -7,7 +7,12 @@ $head = array('body_class' => 'controlled-vocab primary',
               
 head($head);
 ?>
-
+<?php if($vocabName): ?>
+<h1>Terms in <?php echo $vocabName; ?></h1>
+<?php else: ?>
+<h1>Controlled Vocabulary Terms</h1>
+<?php endif; ?>
+<p class="add-button" id="add-item"><a href="<?php echo uri("controlled-vocab/terms/add") ?>" class="add">Add a Term</a></p>
 <table>
 	<thead>
 		<tr>
@@ -24,11 +29,17 @@ head($head);
 <tr>
 	<td><?php echo $term->name; ?></td>
 	<td><?php echo $term->description; ?></td>
-	<td><?php echo $term->getVocabName(); ?></td>
+	<td><a href='<?php echo uri("controlled-vocab/vocabs/show/$term->vocab_id") ?>'><?php echo $term->getVocabName(); ?></a></td>
 	<td><?php echo $term->uri; ?></td>
-	<td><?php foreach(unserialize($term->element_ids) as $elId) {
-			echo $elId;
-	}
+	<td><?php $elements = $term->getElementSetAndElement(); 
+		foreach($elements as $elSet=>$elements) {
+			echo "<h2 class='controlled-vocab-element-set'>$elSet</h2>";
+			echo "<ul class='controlled-vocab-elements'>";
+			foreach($elements as $element) {
+				echo "<li class='controlled-vocab-element'>$element</li>";
+			}
+			echo "</ul>";
+		}
 	?>
 	</td>
 	<td>

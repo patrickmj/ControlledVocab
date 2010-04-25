@@ -11,7 +11,7 @@ head($head);
 
 
 
-<h1>Add A Vocabulary</h1>
+<h1>Edit Vocabulary <?php echo $controlledvocab_vocab->name; ?></h1>
 <?php echo flash(); ?>
 <fieldset class="set">
 <form method="post" enctype="multipart/form-data" >
@@ -42,7 +42,9 @@ head($head);
 
 <?php echo submit(array('class'=>'submit')); ?>
 </form>
-
+<p id="delete_item_link">
+	<a class="delete" href="/workspace/omeka/admin/controlled-vocab/vocabs/delete/<?php echo $controlledvocab_vocab->id ?>">Delete This Item</a>       
+</p>
 </fieldset>
 
 <?php foot(); ?>

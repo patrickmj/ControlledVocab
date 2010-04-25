@@ -68,11 +68,23 @@ class ControlledVocabPlugin
 		$router->addRoute(
 		    'controlled_vocab_terms',
 		    new Zend_Controller_Router_Route(
-		        'controlled-vocab/terms/:action/:id', 
+		        'controlled-vocab/terms/:action/:id/', 
 		        array(
 		            'module'       => 'controlled-vocab', 
 		            'controller'   => 'terms',  
-		            'id'           => '/d+'
+		            'id'           => '/d+',
+
+		        )
+		    )
+		);
+		
+		$router->addRoute(
+		    'controlled_vocab_browse_terms',
+		    new Zend_Controller_Router_Route(
+		        'controlled-vocab/terms/browse/:vocab/', 
+		        array(
+		            'module'       => 'controlled-vocab', 
+		            'controller'   => 'terms'  
 		        )
 		    )
 		);		

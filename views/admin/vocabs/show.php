@@ -7,7 +7,9 @@ $head = array('body_class' => 'controlled-vocab primary',
               
 head($head);
 ?>
+
 <h1><?php echo $controlledvocab_vocab->name; ?></h1>
+
 <table>
 	<thead>
 		<tr>
@@ -23,10 +25,12 @@ head($head);
 <tr>
 	<td><?php echo $controlledvocab_vocab->name; ?></td>
 	<td><?php echo $controlledvocab_vocab->description; ?></td>
-	<td><?php foreach (unserialize($controlledvocab_vocab->collection_ids) as $collection_id): ?>
-		<p><?php echo $collection_id ?></p>
+	<td><ul>
+		<?php foreach ($controlledvocab_vocab->getCollectionNames() as $cName): ?>
+		<li><?php echo $cName; ?></li>
 	 
-	<?php endforeach; ?></td>
+	<?php endforeach; ?>
+	</ul></td>
 	<td><?php echo $controlledvocab_vocab->uri; ?></td>
 	<td><?php echo $controlledvocab_vocab->api_url; ?></td>
 
@@ -37,5 +41,5 @@ head($head);
 
 </tbody>
 </table>
-
+<p><a href='<?php echo uri("controlled-vocab/terms/browse/$controlledvocab_vocab->id") ?>'>Browse Terms</a></p>
 <?php foot(); ?>

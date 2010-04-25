@@ -7,7 +7,8 @@ $head = array('body_class' => 'controlled-vocab primary',
               
 head($head);
 ?>
-
+<h1>Controlled Vocabularies</h1>
+<p class="add-button" id="add-item"><a href="<?php echo uri("controlled-vocab/vocabs/add") ?>" class="add">Add a Vocabulary</a></p>
 <table>
 	<thead>
 		<tr>
