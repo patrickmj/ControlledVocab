@@ -4,6 +4,7 @@
 
 add_plugin_hook('install', 'ControlledVocabPlugin::install');
 add_plugin_hook('uninstall', 'ControlledVocabPlugin::uninstall');
+add_plugin_hook('admin_theme_header', 'ControlledVocabPlugin::admin_theme_header');
 add_plugin_hook('define_routes', 'ControlledVocabPlugin::define_routes');
 add_filter('admin_navigation_main', 'ControlledVocabPlugin::admin_navigation_main');
 
@@ -12,27 +13,15 @@ if(class_exists("ControlledVocab_Term")) {
 	$filterElements = $termTable->getElementSetsAndElements();
 	foreach($filterElements as $elSet=>$elNames) {
 		foreach($elNames as $elName) {
-			add_filter(array('Form', 'Item', 'Dublin Core', 'Subject'), 'ControlledVocabPlugin::filterItemForm');    
+			add_filter(array('Form', 'Item', $elSet, $elName), 'ControlledVocabPlugin::filterItemForm');    
 		}
 	}
-	
-	
-	
 }
 	
 
 
 class ControlledVocabPlugin
 {
-
-    public static $dcSubjects = array(''       => '',
-                                      'red'    => 'red',
-                                      'yellow' => 'yellow',
-                                      'green'  => 'green',
-                                      'blue'   => 'blue',
-                                      'brown'  => 'brown',
-                                      'black'  => 'black',
-                                      'white'  => 'white');
                                       
                                                                             
 	public static function admin_navigation_main($tabs)
@@ -109,6 +98,11 @@ class ControlledVocabPlugin
 		$sql = "DROP TABLE IF EXISTS `{$db->prefix}controlled_vocab_vocabs`";
 		$db->exec($sql);		
 	}   
+	public static function admin_theme_header()
+	{
+		echo js('controlledvocab', 'javascripts');
+		echo "<link rel='stylesheet' href='" . css('controlledvocab') . "' />";
+	}
 
     public static function filterItemForm($html, $inputNameStem, $value,
                                           $options, $record, $element)
@@ -120,11 +114,14 @@ class ControlledVocabPlugin
         $html .= __v()->formTextarea($inputNameStem . '[text]', $value, $taOptions);
         
         $html .= "<br/>";
-        $html .= "<div class='controlled-vocabs'>";
-        $html .= radio(array('class'=>'controlled-vocab-vocabs', 'name'=>'controlled-vocab-radio-' . $element->name), array_keys($controlledVocabs), null, null);
+        $html .= "<div class='controlled-vocab-vocabs'>";
+        $html .= "<h3 class='controlled-vocab-heading'>Controlled Vocabularies</h3>";
+        $html .= radio(array('class'=>'controlled-vocab-vocabs', 'onchange'=>'ControlledVocab.showTerms(event)', 'name'=>'controlled-vocab-radio-' . $inputNameStem), array_keys($controlledVocabs), null, null);
         $vocabCount = 0;
         foreach($controlledVocabs as $vocab=>$termPairs) {        	
-       	$html .= select(array('name'=>'controlled-vocab-select-' . $element->name . '-' . $vocabCount , 'class'=>'controlled-vocab-terms'), $termPairs, null);
+        
+        //have to do inline style to make jQuery play nicely with hiding and showing.
+       	$html .= select(array('name'=>'controlled-vocab-select-' . $inputNameStem . '-' . $vocabCount , 'class'=>'controlled-vocab-terms', 'style'=>'display:none;', 'onchange'=>'ControlledVocab.updateField(event)'), $termPairs, null);
         	$vocabCount++;
         }
         $html .= "</div";
