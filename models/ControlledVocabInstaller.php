@@ -27,12 +27,13 @@ class ControlledVocabInstaller
 	function addVocab()
 	{		
 		$vocabNode = $this->xpath->query('vocab')->item(0);		
-		$DCTypes = new ControlledVocab_Vocab();		
-		$DCTypes->name = $this->xpath->query('name', $vocabNode)->item(0)->textContent;
-		$DCTypes->description = $this->xpath->query('description', $vocabNode)->item(0)->textContent;
-		$DCTypes->uri = $this->xpath->query('uri', $vocabNode)->item(0)->textContent;
-		$DCTypes->save();
-		$this->vocabId = $DCTypes->id;
+		$newVocab = new ControlledVocab_Vocab();		
+		$newVocab->name = $this->xpath->query('name', $vocabNode)->item(0)->textContent;
+		$newVocab->description = $this->xpath->query('description', $vocabNode)->item(0)->textContent;
+		$newVocab->uri = $this->xpath->query('uri', $vocabNode)->item(0)->textContent;
+		$newVocab->collection = serialize(array());
+		$newVocab->save();
+		$this->vocabId = $newVocab->id;
 	}
 	
 	function addTerms()
