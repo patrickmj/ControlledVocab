@@ -23,7 +23,7 @@ class ControlledVocab_TermTable extends Omeka_Db_Table
 
 	public function findByVocabAndElement($vocab, $element)
 	{
-		$results = $this->findBy(array('vocab'=>$vocab));
+		$results = $this->findBy(array('vocab'=>$vocab, 'alpha'=>true));
 		
 		return $this->_filterResultsByElement($results, $element);
 	}
