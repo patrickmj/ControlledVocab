@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<controlledVocab>
+    <vocab>
+        <name>DCMI Types</name>
+        <description>The DCMI Type Vocabulary provides a general, cross-domain list of approved
+            terms that may be used as values for the Resource Type element to identify the genre of
+            a resource. The terms documented here are also included in the more comprehensive
+            document "DCMI Metadata Terms" at http://dublincore.org/documents/dcmi-terms/.</description>
+        <uri>http://purl.org/dc/terms/DCMIType</uri>
+    </vocab>
+    <terms>
+        <term>
+            <name>Collection</name>
+            <uri>http://purl.org/dc/dcmitype/Collection</uri>
+            <description>An aggregation of resources.A collection is described as a group; its parts
+                may also be separately described.</description>
+            <elements>
+                <element>
+                    <elementName>Type</elementName>
+                    <elementSet>Dublin Core</elementSet>
+                </element>
+            </elements>
+        </term>
+        <term>
+            <name>Dataset</name>
+            <uri>http://purl.org/dc/dcmitype/Dataset</uri>
+            <description>Data encoded in a defined structure.Examples include lists, tables, and
+                databases. A dataset may be useful for direct machine processing.</description>
+            <elements>
+                <element>
+                    <elementName>Type</elementName>
+                    <elementSet>Dublin Core</elementSet>
+                </element>
+            </elements>
+        </term>
+        <term>
+            <name>Event</name>
+            <uri>http://purl.org/dc/dcmitype/Event</uri>
+            <description>A non-persistent, time-based occurrence.Metadata for an event provides
+                descriptive information that is the basis for discovery of the purpose, location,
+                duration, and responsible agents associated with an event. Examples include an
+                exhibition, webcast, conference, workshop, open day, performance, battle, trial,
+                wedding, tea party, conflagration.</description>
+            <elements>
+                <element>
+                    <elementName>Type</elementName>
+                    <elementSet>Dublin Core</elementSet>
+                </element>
+            </elements>
+        </term>
+        <term>
+            <name>Image</name>
+            <uri>http://purl.org/dc/dcmitype/Image</uri>
+            <description>A visual representation other than text.Examples include images and
+                photographs of physical objects, paintings, prints, drawings, other images and
+                graphics, animations and moving pictures, film, diagrams, maps, musical notation.
+                Note that Image may include both electronic and physical representations.</description>
+            <elements>
+                <element>
+                    <elementName>Type</elementName>
+                    <elementSet>Dublin Core</elementSet>
+                </element>
+            </elements>
+        </term>
+        <term>
+            <name>Interactive Resource</name>
+            <uri>http://purl.org/dc/dcmitype/InteractiveResource</uri>
+            <description>A resource requiring interaction from the user to be understood, executed,
+                or experienced.Examples include forms on Web pages, applets, multimedia learning
+                objects, chat services, or virtual reality environments.</description>
+            <elements>
+                <element>
+                    <elementName>Type</elementName>
+                    <elementSet>Dublin Core</elementSet>
+                </element>
+            </elements>
+        </term>
+        <term>
+            <name>Moving Image</name>
+            <uri>http://purl.org/dc/dcmitype/MovingImage</uri>
+            <description>A series of visual representations imparting an impression of motion when
+                shown in succession.Examples include animations, movies, television programs,
+                videos, zoetropes, or visual output from a simulation. Instances of the type Moving
+                Image must also be describable as instances of the broader type Image.</description>
+            <elements>
+                <element>
+                    <elementName>Type</elementName>
+                    <elementSet>Dublin Core</elementSet>
+                </element>
+            </elements>
+        </term>
+        <term>
+            <name>Physical Object</name>
+            <uri>http://purl.org/dc/dcmitype/PhysicalObject</uri>
+            <description>An inanimate, three-dimensional object or substance.Note that digital
+                representations of, or surrogates for, these objects should use Image, Text or one
+                of the other types.</description>
+            <elements>
+                <element>
+                    <elementName>Type</elementName>
+                    <elementSet>Dublin Core</elementSet>
+                </element>
+            </elements>
+        </term>
+        <term>
+            <name>Service</name>
+            <uri>http://purl.org/dc/dcmitype/Service</uri>
+            <description>A system that provides one or more functions.Examples include a
+                photocopying service, a banking service, an authentication service, interlibrary
+                loans, a Z39.50 or Web server.</description>
+            <elements>
+                <element>
+                    <elementName>Type</elementName>
+                    <elementSet>Dublin Core</elementSet>
+                </element>
+            </elements>
+        </term>
+        <term>
+            <name>Software</name>
+            <uri>http://purl.org/dc/dcmitype/Software</uri>
+            <description>A computer program in source or compiled form.Examples include a C source
+                file, MS-Windows .exe executable, or Perl script.</description>
+            <elements>
+                <element>
+                    <elementName>Type</elementName>
+                    <elementSet>Dublin Core</elementSet>
+                </element>
+            </elements>
+        </term>
+        <term>
+            <name>Sound</name>
+            <uri>http://purl.org/dc/dcmitype/Sound</uri>
+            <description>A resource primarily intended to be heard.Examples include a music playback
+                file format, an audio compact disc, and recorded speech or sounds.</description>
+            <elements>
+                <element>
+                    <elementName>Type</elementName>
+                    <elementSet>Dublin Core</elementSet>
+                </element>
+            </elements>
+        </term>
+        <term>
+            <name>Still Image</name>
+            <uri>http://purl.org/dc/dcmitype/StillImage</uri>
+            <description>A static visual representation.Examples include paintings, drawings,
+                graphic designs, plans and maps. Recommended best practice is to assign the type
+                Text to images of textual materials. Instances of the type Still Image must also be
+                describable as instances of the broader type Image.</description>
+            <elements>
+                <element>
+                    <elementName>Type</elementName>
+                    <elementSet>Dublin Core</elementSet>
+                </element>
+            </elements>
+        </term>
+        <term>
+            <name>Text</name>
+            <uri>http://purl.org/dc/dcmitype/Text</uri>
+            <description>A resource consisting primarily of words for reading.Examples include
+                books, letters, dissertations, poems, newspapers, articles, archives of mailing
+                lists. Note that facsimiles or images of texts are still of the genre Text.</description>
+            <elements>
+                <element>
+                    <elementName>Type</elementName>
+                    <elementSet>Dublin Core</elementSet>
+                </element>
+            </elements>
+        </term>
+    </terms>
+</controlledVocab>

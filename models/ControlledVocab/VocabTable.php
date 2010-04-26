@@ -11,6 +11,13 @@ class ControlledVocab_VocabTable extends Omeka_Db_Table
 		return array(id, name);
 	}
 	
+	public function applySearchFilters($select, $params)
+	{		
+        if(isset($params['name'])) {
+            $this->filterByName($select, $params['name']);
+        }      						
+	}
+	
 	public function findByCollection($collection)
 	{
 		$vocabs = $this->findAll();
@@ -29,6 +36,12 @@ class ControlledVocab_VocabTable extends Omeka_Db_Table
 		}
 		return $results;		
 	}	
+	
+	public function filterByName($select, $name)
+	{
+		$select->where("name = ?", $name);
+		return $select;
+	}
 	
 }
 ?>

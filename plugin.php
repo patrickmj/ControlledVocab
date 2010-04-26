@@ -1,24 +1,21 @@
 <?php
-
+define('CONTROLLED_VOCAB_PLUGIN_DIR', dirname(__FILE__));
 
 
 add_plugin_hook('install', 'ControlledVocabPlugin::install');
 add_plugin_hook('uninstall', 'ControlledVocabPlugin::uninstall');
 add_plugin_hook('admin_theme_header', 'ControlledVocabPlugin::admin_theme_header');
 add_plugin_hook('define_routes', 'ControlledVocabPlugin::define_routes');
+add_plugin_hook('config', 'ControlledVocabPlugin::config');
+add_plugin_hook('config_form', 'ControlledVocabPlugin::config_form');
+
 add_filter('admin_navigation_main', 'ControlledVocabPlugin::admin_navigation_main');
 
-if(class_exists("ControlledVocab_Term")) {
-	$termTable = get_db()->getTable('ControlledVocab_Term');
-	$filterElements = $termTable->getElementSetsAndElements();
-	foreach($filterElements as $elSet=>$elNames) {
-		foreach($elNames as $elName) {
-			add_filter(array('Form', 'Item', $elSet, $elName), 'ControlledVocabPlugin::filterItemForm');    
-		}
-	}
-}
+try{
+	ControlledVocabPlugin::addFilters();	
+} catch (Exception $e) {
 	
-
+}
 
 class ControlledVocabPlugin
 {
@@ -30,6 +27,21 @@ class ControlledVocabPlugin
 		return $tabs;
 	}
 
+	public static function addFilters()
+	{
+
+		//TODO:: how do I check if tables have been set up?
+		if(class_exists("ControlledVocab_Term")) {
+			$termTable = get_db()->getTable('ControlledVocab_Term');
+			$filterElements = $termTable->getElementSetsAndElements();
+			foreach($filterElements as $elSet=>$elNames) {
+				foreach($elNames as $elName) {
+					add_filter(array('Form', 'Item', $elSet, $elName), 'ControlledVocabPlugin::filterItemForm');    
+				}
+			}
+		}		
+	}
+
 	public static function install()
 	{
 		$db = get_db();				
@@ -38,7 +50,7 @@ class ControlledVocabPlugin
 		  `id` int(11) NOT NULL auto_increment,
 		  `name` text COLLATE utf8_unicode_ci NOT NULL,
 		  `description` text COLLATE utf8_unicode_ci NULL,
-		  `collection_ids`  text COLLATE utf8_unicode_ci NOT NULL,	  		
+		  `collection_ids`  text COLLATE utf8_unicode_ci  NULL,	  		
 		  `uri` text COLLATE utf8_unicode_ci NULL,
 		  `api_url` text COLLATE utf8_unicode_ci NULL,
 		  PRIMARY KEY (`id`)
@@ -142,7 +154,18 @@ class ControlledVocabPlugin
 
         return $html;
     }
+    
+    public static function config_form() {
+    	include 'config_form.php';
+    }
 
+	public static function config() {
+		//print_r($_POST['files']);
+		foreach($_POST['files'] as $fileName) {
+			$installer = new ControlledVocabInstaller($fileName);
+			$installer->install();
+		}
+	}
 }    
 
 ?>
