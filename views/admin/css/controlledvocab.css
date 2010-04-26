@@ -9,6 +9,11 @@
 	
 }
 
+div.controlled-vocab-clear {
+	clear:both;
+	padding: 5px;
+}
+
 div.controlled-vocab-vocab-index {
 	width: 45%;
 	float:left;

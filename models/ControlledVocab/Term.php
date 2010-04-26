@@ -41,7 +41,9 @@ class ControlledVocab_Term extends Omeka_Record {
 	{
 		$element_id = is_numeric($element) ? $element : $element->id;
 		$termElements = unserialize($this->element_ids);
-		return in_array($element_id, $termElements);
+		print_r($termElements);
+		exit;
+		return (bool) in_array($element_id, $termElements);
 	}
 	
 	public function vocabAppliesToCollection($collection_id)

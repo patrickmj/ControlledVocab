@@ -14,6 +14,9 @@ class ControlledVocab_Vocab extends Omeka_Record {
 	{
 		$collection_id = is_numeric($collection) ? $collection : $collection->id;
 		$vocabCollections = unserialize($this->collection_ids);
+		if(false === $vocabCollections) {
+			$vocabCollections = array();
+		}
 		return in_array($collection_id, $vocabCollections);
 	}
 

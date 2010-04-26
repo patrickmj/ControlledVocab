@@ -4,6 +4,8 @@ You can create vocabularies and assign which collections they apply to. Terms ar
 
 Dublin Core Types and MIME types are available to include in the plugin configuration.
 
+A collection MUST be assigned to a vocabulary before it can be used.
+
 To create an xml file to import an existing SMALL vocabulary, look in the /files directory for example of the xml format to use.
 
  

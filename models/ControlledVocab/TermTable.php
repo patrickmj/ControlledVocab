@@ -45,7 +45,7 @@ class ControlledVocab_TermTable extends Omeka_Db_Table
 		$returnArray = array();
 		foreach($vocabs as $vocab) {
 			$vocabName = $vocab->name;
-			$returnArray[$vocabName] = array();
+			
 			$terms = $this->findByVocabAndElement($vocab, $element);
 			foreach($terms as $term) {
 				$returnArray[$vocabName][$term->id] = $term->name;
@@ -61,11 +61,15 @@ class ControlledVocab_TermTable extends Omeka_Db_Table
 		$element_id = is_numeric($element) ? $element : $element->id;
 		
 		foreach($results as $index=>$result) {
-			if (false === $result->appliesToElementId($element_id)) {
+			$termElements = unserialize($result->element_ids);
+			if( ! in_array($element_id, $termElements)) {
+			//if (false ===  $result->appliesToElementId($element_id)) {
+			//if($element_id == 51) {							
 				unset($results[$index]);
 				release_object($result);
 			}
 		}
+		
 		return $results;
 	}
 	
@@ -95,6 +99,10 @@ class ControlledVocab_TermTable extends Omeka_Db_Table
 
 	public function applySearchFilters($select, $params)
 	{		
+		
+		if(isset($params['alpha'])) {
+			$select->order('name ASC');	
+		}
         if(isset($params['vocab'])) {
             $this->filterByVocab($select, $params['vocab']);
         }      						

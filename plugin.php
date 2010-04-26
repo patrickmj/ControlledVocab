@@ -149,7 +149,7 @@ class ControlledVocabPlugin
 	       	$html .= select(array('name'=>'controlled-vocab-select-' . $inputNameStem . '-' . $vocabCount , 'class'=>'controlled-vocab-terms', 'style'=>'display:none;', 'onchange'=>'ControlledVocab.updateField(event)'), $termPairs, null);
 	        	$vocabCount++;
 	        }
-	        $html .= "</div";        	        	
+	        $html .= "</div><div class='controlled-vocab-clear'></div>";        	        	
         }
 
         return $html;
