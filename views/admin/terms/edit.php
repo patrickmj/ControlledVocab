@@ -43,7 +43,7 @@ head($head);
 <?php echo submit(array('class'=>'submit')); ?>
 </form>
 <p id="delete_item_link">
-	<a class="delete" href="/workspace/omeka/admin/controlled-vocab/terms/delete/<?php echo $controlledvocab_term->id ?>">Delete This Item</a>       
+	<a class="delete" href="<?php echo uri('controlled-vocab/terms/delete/'). $controlledvocab_term->id ?>">Delete This Item</a>       
 </p>
 </fieldset>
 <?php foot(); ?>
