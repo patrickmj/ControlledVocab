@@ -124,7 +124,9 @@ class ControlledVocabPlugin
 	}   
 	public static function admin_theme_header()
 	{
-		echo js('controlledvocab', 'javascripts');
+		echo js('jquery');
+		echo ("<script type='text/javascript'>jQuery.noConflict() ;</script>");
+		echo js('controlledvocab', 'javascripts');		
 		echo "<link rel='stylesheet' href='" . css('controlledvocab') . "' />";
 	}
 
